@@ -1,8 +1,6 @@
-package utils
+package bot
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"log/slog"
 	"sort"
 	"strings"
@@ -10,13 +8,13 @@ import (
 	"github.com/AshokShau/gotdbot"
 )
 
-type Shortcut struct {
+type shortcut struct {
 	Title       string
 	Description string
 	Text        string
 }
 
-var shortcuts = map[string]Shortcut{
+var shortcuts = map[string]shortcut{
 	"nohello": {
 		Title:       "No Hello",
 		Description: "Please don't just say hello in chat.",
@@ -114,7 +112,7 @@ var shortcuts = map[string]Shortcut{
 	},
 }
 
-func SearchShortcuts(c *gotdbot.Client, query string) []gotdbot.InputInlineQueryResult {
+func shortcutResults(c *gotdbot.Client, query string) []gotdbot.InputInlineQueryResult {
 	query = strings.ToLower(strings.TrimSpace(query))
 	if query == "" {
 		return nil
@@ -138,11 +136,8 @@ func SearchShortcuts(c *gotdbot.Client, query string) []gotdbot.InputInlineQuery
 			continue
 		}
 
-		hash := sha256.Sum256([]byte("shortcut_" + key))
-		id := hex.EncodeToString(hash[:16])
-
 		results = append(results, &gotdbot.InputInlineQueryResultArticle{
-			Id:          "shortcut_" + id,
+			Id:          "shortcut_" + key,
 			Title:       "📑 " + s.Title,
 			Description: s.Description,
 			InputMessageContent: &gotdbot.InputMessageText{

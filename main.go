@@ -5,11 +5,10 @@ package main
 import (
 	"ashokshau/pytgdocs/config"
 	"ashokshau/pytgdocs/internal/bot"
-	"ashokshau/pytgdocs/internal/bot/handlers"
 	"ashokshau/pytgdocs/internal/docs"
-	"log"
 	"log/slog"
 	"os"
+	"time"
 
 	"github.com/AshokShau/gotdbot"
 
@@ -19,7 +18,8 @@ import (
 func main() {
 	cfg, err := config.Load()
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("Invalid configuration", "error", err)
+		os.Exit(1)
 	}
 
 	docData, err := docs.Load("./docs.json")
@@ -29,17 +29,17 @@ func main() {
 	}
 
 	clientConfig := &gotdbot.ClientOpts{
-		LibraryPath: "./libtdjson.so.1.8.67",
+		AutoRetry: &gotdbot.AutoRetry{MaxFloodWait: 5 * time.Second, MessageNotFound: true, ChatNotFound: true},
 	}
 
-	client, err := gotdbot.NewClient(int32(cfg.ApiID), cfg.ApiHash, cfg.Token, clientConfig)
+	client, err := gotdbot.NewClient(cfg.APIID, cfg.APIHash, cfg.Token, clientConfig)
 	if err != nil {
 		slog.Error("gotdbot.NewClient error", "error", err)
 		os.Exit(1)
 	}
 
 	b := bot.New(client, docData)
-	handlers.Register(b)
+	b.Register()
 
 	if err = client.Start(); err != nil {
 		slog.Error("gotdbot.Start() error", "error", err)

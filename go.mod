@@ -3,8 +3,8 @@ module ashokshau/pytgdocs
 go 1.26.4
 
 require (
-	github.com/AshokShau/gotdbot v0.9.5
+	github.com/AshokShau/gotdbot v0.10.3
 	github.com/joho/godotenv v1.5.1
 )
 
-require github.com/ebitengine/purego v0.11.1 // indirect
+require github.com/ebitengine/purego v0.11.3 // indirect
