@@ -612,6 +612,8 @@
       "title": "Create Remove Block",
       "library": "NTgCalls",
       "kind": "method",
+      "description": "This method allows creating the end-to-end chain block that removes the given participants from a conference call and rotates its shared key, so the removed users can no longer decrypt the call. The block has to be sent to Telegram with phone.deleteConferenceCallParticipants.",
+      "preview": "This method allows creating the end-to-end chain block that removes the given participants from a conference call and rotates its shared key, so the removed users can no longer decrypt the call. The block has to be se...",
       "url": "https://pytgcalls.github.io/NTgCalls/Advanced%20Methods/Create%20Remove%20Block?ref=dev",
       "languages": [
         {
@@ -632,7 +634,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>user_ids</b>: <code>list[int]</code>"
+                    "name": "<b>user_ids</b>: <code>list[int]</code>",
+                    "description": "The ids of the users to remove from the call."
                   }
                 ]
               },
@@ -674,7 +677,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>user_ids</b>: <code>const int64_t*</code>, <b>user_ids_len</b>: <code>size_t</code>"
+                    "name": "<b>user_ids</b>: <code>const int64_t*</code>, <b>user_ids_len</b>: <code>size_t</code>",
+                    "description": "The ids of the users to remove from the call."
                   },
                   {
                     "name": "<b>out</b>: <code>uint8_t**</code>, <b>out_len</b>: <code>size_t*</code>",
@@ -716,7 +720,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>userIds</b>: <code>bigint[]</code>"
+                    "name": "<b>userIds</b>: <code>bigint[]</code>",
+                    "description": "The ids of the users to remove from the call."
                   }
                 ]
               },
@@ -754,7 +759,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<code>java.util.List&lt;Long&gt;</code> <b>userIds</b>"
+                    "name": "<code>java.util.List&lt;Long&gt;</code> <b>userIds</b>",
+                    "description": "The ids of the users to remove from the call."
                   }
                 ]
               },
@@ -792,7 +798,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>user_ids</b>: <code>Vec&lt;i64&gt;</code>"
+                    "name": "<b>user_ids</b>: <code>Vec&lt;i64&gt;</code>",
+                    "description": "The ids of the users to remove from the call."
                   }
                 ]
               },
@@ -1843,6 +1850,8 @@
       "title": "Get E2E Participants",
       "library": "NTgCalls",
       "kind": "method",
+      "description": "This method allows retrieving the users that currently hold the key of a conference call, as recorded by its end-to-end chain. Comparing it with the participants of the call shows who cannot decrypt the media yet and who left without being removed.",
+      "preview": "This method allows retrieving the users that currently hold the key of a conference call, as recorded by its end-to-end chain. Comparing it with the participants of the call shows who cannot decrypt the media yet and ...",
       "url": "https://pytgcalls.github.io/NTgCalls/Advanced%20Methods/Get%20E2E%20Participants?ref=dev",
       "languages": [
         {
@@ -2214,6 +2223,152 @@
               "language": "rust",
               "code": "use ntgcalls::NTgCalls;\n\nNTgCalls::get_media_devices()?;"
             }
+          }
+        }
+      ]
+    },
+    {
+      "id": "6e6b10852105d0ba",
+      "path": "/NTgCalls/Advanced Methods/Get Media Info.xml",
+      "title": "Get Media Info",
+      "library": "NTgCalls",
+      "kind": "method",
+      "description": "This method tells what NTgCalls can do with a file on its own, without FFmpeg: with <code>CAPTURE</code> it opens the file and describes its tracks, with <code>PLAYBACK</code> it describes what a recording to that path would contain.",
+      "preview": "This method tells what NTgCalls can do with a file on its own, without FFmpeg: with CAPTURE it opens the file and describes its tracks, with PLAYBACK it describes what a recording to that path would contain.",
+      "url": "https://pytgcalls.github.io/NTgCalls/Advanced%20Methods/Get%20Media%20Info?ref=dev",
+      "languages": [
+        {
+          "id": "python",
+          "label": "Python",
+          "content": {
+            "signature": "NTgCalls.<b>get_media_info</b>() <code>-&gt; ntgcalls.MediaInfo</code>",
+            "example": {
+              "language": "python",
+              "code": "from ntgcalls import NTgCalls\n\nNTgCalls.get_media_info(\n    path,\n    mode\n)"
+            },
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>path</b>: <code>str</code>",
+                    "description": "Path of the file. With <code>PLAYBACK</code> only its extension matters, so the file doesn&#39;t need to exist."
+                  },
+                  {
+                    "name": "<b>mode</b>: <code>ntgcalls.StreamMode</code>",
+                    "description": "<code>CAPTURE</code> to read the file, <code>PLAYBACK</code> to record to it. With <code>CAPTURE</code> a missing file raises <code>FileError</code> and an unreadable one <code>FFmpegError</code>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "c",
+          "label": "C",
+          "content": {
+            "signature": "<code>ntg_result</code> <b>ntg_get_media_info</b>()",
+            "example": {
+              "language": "c",
+              "code": "#include \"ntgcalls.h\"\n\nntg_result result = ntg_get_media_info(\n    path,\n    mode,\n    &out\n);"
+            },
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>path</b>: <code>const char*</code>",
+                    "description": "Path of the file. With <code>PLAYBACK</code> only its extension matters, so the file doesn&#39;t need to exist."
+                  },
+                  {
+                    "name": "<b>mode</b>: <code>ntg_stream_mode</code>",
+                    "description": "<code>CAPTURE</code> to read the file, <code>PLAYBACK</code> to record to it. With <code>CAPTURE</code> a missing file raises <code>FileError</code> and an unreadable one <code>FFmpegError</code>."
+                  },
+                  {
+                    "name": "<b>out</b>: <code>ntg_media_info*</code>",
+                    "description": "Out parameter that receives the result of the call."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "node",
+          "label": "Node.js",
+          "content": {
+            "signature": "<code>static</code> NTgCalls.<b>getMediaInfo</b>() <code>: Promise&lt;MediaInfo&gt;</code>",
+            "example": {
+              "language": "javascript",
+              "code": "const { NTgCalls } = require('ntgcalls');\n\nNTgCalls.getMediaInfo(\n    path,\n    mode\n);"
+            },
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>path</b>: <code>string</code>",
+                    "description": "Path of the file. With <code>PLAYBACK</code> only its extension matters, so the file doesn&#39;t need to exist."
+                  },
+                  {
+                    "name": "<b>mode</b>: <code>StreamMode</code>",
+                    "description": "<code>CAPTURE</code> to read the file, <code>PLAYBACK</code> to record to it. With <code>CAPTURE</code> a missing file raises <code>FileError</code> and an unreadable one <code>FFmpegError</code>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "java",
+          "label": "Java",
+          "content": {
+            "signature": "<code>static</code> <code>MediaInfo</code> NTgCalls.<b>getMediaInfo</b>()",
+            "example": {
+              "language": "java",
+              "code": "import io.github.pytgcalls.NTgCalls;\n\nNTgCalls.getMediaInfo(\n    path,\n    mode\n);"
+            },
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<code>String</code> <b>path</b>",
+                    "description": "Path of the file. With <code>PLAYBACK</code> only its extension matters, so the file doesn&#39;t need to exist."
+                  },
+                  {
+                    "name": "<code>StreamMode</code> <b>mode</b>",
+                    "description": "<code>CAPTURE</code> to read the file, <code>PLAYBACK</code> to record to it. With <code>CAPTURE</code> a missing file raises <code>FileError</code> and an unreadable one <code>FFmpegError</code>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rust",
+          "label": "Rust",
+          "content": {
+            "signature": "<code>pub fn</code> NTgCalls::<b>get_media_info</b>() <code>-&gt; Result&lt;MediaInfo&gt;</code>",
+            "example": {
+              "language": "rust",
+              "code": "use ntgcalls::NTgCalls;\n\nNTgCalls::get_media_info(\n    path,\n    mode\n)?;"
+            },
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>path</b>: <code>String</code>",
+                    "description": "Path of the file. With <code>PLAYBACK</code> only its extension matters, so the file doesn&#39;t need to exist."
+                  },
+                  {
+                    "name": "<b>mode</b>: <code>StreamMode</code>",
+                    "description": "<code>CAPTURE</code> to read the file, <code>PLAYBACK</code> to record to it. With <code>CAPTURE</code> a missing file raises <code>FileError</code> and an unreadable one <code>FFmpegError</code>."
+                  }
+                ]
+              }
+            ]
           }
         }
       ]
@@ -4627,7 +4782,27 @@
                   },
                   {
                     "name": "Format.<b>MATROSKA</b>",
-                    "description": "Matroska video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. The lightest choice, since the frames are sent and received without being decoded or encoded, saving most of the CPU spent on video."
+                    "description": "Matroska audio or video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. Holds Opus audio and H264, VP8, VP9 or AV1 video, which are sent and received without being decoded or encoded, saving most of the CPU spent on media."
+                  },
+                  {
+                    "name": "Format.<b>AUTO</b>",
+                    "description": "Default. When reading, detects the container from the file itself. When writing to a file, picks the container from its extension, falling back to Ogg for audio and Matroska for video, which are also used for shell commands."
+                  },
+                  {
+                    "name": "Format.<b>WEBM</b>",
+                    "description": "WebM audio or video, the web subset of Matroska. Holds Opus audio and VP8, VP9 or AV1 video, sent and received without being decoded or encoded."
+                  },
+                  {
+                    "name": "Format.<b>MP4</b>",
+                    "description": "MP4 audio or video, also used for .m4a files. H264, VP9 and AV1 video is sent and received as it is, except H264 with B-frames, which is re-encoded, while the audio is decoded when reading and encoded to AAC when writing. Recordings are fragmented MP4, which stays playable if the recording is interrupted. An MP4 read from a shell command must be saved with faststart, because the index at the end of the file can&#39;t be reached from a pipe."
+                  },
+                  {
+                    "name": "Format.<b>WAV</b>",
+                    "description": "WAV audio, uncompressed 16-bit PCM with a header. Recordings are written at the requested sample rate."
+                  },
+                  {
+                    "name": "Format.<b>FLAC</b>",
+                    "description": "FLAC audio, lossless and compressed. Recordings are written at the requested sample rate."
                   }
                 ]
               }
@@ -4657,7 +4832,27 @@
                   },
                   {
                     "name": "<b>NTG_FORMAT_MATROSKA</b>",
-                    "description": "Matroska video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. The lightest choice, since the frames are sent and received without being decoded or encoded, saving most of the CPU spent on video."
+                    "description": "Matroska audio or video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. Holds Opus audio and H264, VP8, VP9 or AV1 video, which are sent and received without being decoded or encoded, saving most of the CPU spent on media."
+                  },
+                  {
+                    "name": "<b>NTG_FORMAT_AUTO</b>",
+                    "description": "Default. When reading, detects the container from the file itself. When writing to a file, picks the container from its extension, falling back to Ogg for audio and Matroska for video, which are also used for shell commands."
+                  },
+                  {
+                    "name": "<b>NTG_FORMAT_WEBM</b>",
+                    "description": "WebM audio or video, the web subset of Matroska. Holds Opus audio and VP8, VP9 or AV1 video, sent and received without being decoded or encoded."
+                  },
+                  {
+                    "name": "<b>NTG_FORMAT_MP4</b>",
+                    "description": "MP4 audio or video, also used for .m4a files. H264, VP9 and AV1 video is sent and received as it is, except H264 with B-frames, which is re-encoded, while the audio is decoded when reading and encoded to AAC when writing. Recordings are fragmented MP4, which stays playable if the recording is interrupted. An MP4 read from a shell command must be saved with faststart, because the index at the end of the file can&#39;t be reached from a pipe."
+                  },
+                  {
+                    "name": "<b>NTG_FORMAT_WAV</b>",
+                    "description": "WAV audio, uncompressed 16-bit PCM with a header. Recordings are written at the requested sample rate."
+                  },
+                  {
+                    "name": "<b>NTG_FORMAT_FLAC</b>",
+                    "description": "FLAC audio, lossless and compressed. Recordings are written at the requested sample rate."
                   }
                 ]
               }
@@ -4687,7 +4882,27 @@
                   },
                   {
                     "name": "Format.<b>MATROSKA</b>",
-                    "description": "Matroska video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. The lightest choice, since the frames are sent and received without being decoded or encoded, saving most of the CPU spent on video."
+                    "description": "Matroska audio or video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. Holds Opus audio and H264, VP8, VP9 or AV1 video, which are sent and received without being decoded or encoded, saving most of the CPU spent on media."
+                  },
+                  {
+                    "name": "Format.<b>AUTO</b>",
+                    "description": "Default. When reading, detects the container from the file itself. When writing to a file, picks the container from its extension, falling back to Ogg for audio and Matroska for video, which are also used for shell commands."
+                  },
+                  {
+                    "name": "Format.<b>WEBM</b>",
+                    "description": "WebM audio or video, the web subset of Matroska. Holds Opus audio and VP8, VP9 or AV1 video, sent and received without being decoded or encoded."
+                  },
+                  {
+                    "name": "Format.<b>MP4</b>",
+                    "description": "MP4 audio or video, also used for .m4a files. H264, VP9 and AV1 video is sent and received as it is, except H264 with B-frames, which is re-encoded, while the audio is decoded when reading and encoded to AAC when writing. Recordings are fragmented MP4, which stays playable if the recording is interrupted. An MP4 read from a shell command must be saved with faststart, because the index at the end of the file can&#39;t be reached from a pipe."
+                  },
+                  {
+                    "name": "Format.<b>WAV</b>",
+                    "description": "WAV audio, uncompressed 16-bit PCM with a header. Recordings are written at the requested sample rate."
+                  },
+                  {
+                    "name": "Format.<b>FLAC</b>",
+                    "description": "FLAC audio, lossless and compressed. Recordings are written at the requested sample rate."
                   }
                 ]
               }
@@ -4717,7 +4932,27 @@
                   },
                   {
                     "name": "Format.<b>MATROSKA</b>",
-                    "description": "Matroska video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. The lightest choice, since the frames are sent and received without being decoded or encoded, saving most of the CPU spent on video."
+                    "description": "Matroska audio or video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. Holds Opus audio and H264, VP8, VP9 or AV1 video, which are sent and received without being decoded or encoded, saving most of the CPU spent on media."
+                  },
+                  {
+                    "name": "Format.<b>AUTO</b>",
+                    "description": "Default. When reading, detects the container from the file itself. When writing to a file, picks the container from its extension, falling back to Ogg for audio and Matroska for video, which are also used for shell commands."
+                  },
+                  {
+                    "name": "Format.<b>WEBM</b>",
+                    "description": "WebM audio or video, the web subset of Matroska. Holds Opus audio and VP8, VP9 or AV1 video, sent and received without being decoded or encoded."
+                  },
+                  {
+                    "name": "Format.<b>MP4</b>",
+                    "description": "MP4 audio or video, also used for .m4a files. H264, VP9 and AV1 video is sent and received as it is, except H264 with B-frames, which is re-encoded, while the audio is decoded when reading and encoded to AAC when writing. Recordings are fragmented MP4, which stays playable if the recording is interrupted. An MP4 read from a shell command must be saved with faststart, because the index at the end of the file can&#39;t be reached from a pipe."
+                  },
+                  {
+                    "name": "Format.<b>WAV</b>",
+                    "description": "WAV audio, uncompressed 16-bit PCM with a header. Recordings are written at the requested sample rate."
+                  },
+                  {
+                    "name": "Format.<b>FLAC</b>",
+                    "description": "FLAC audio, lossless and compressed. Recordings are written at the requested sample rate."
                   }
                 ]
               }
@@ -4747,7 +4982,27 @@
                   },
                   {
                     "name": "Format::<b>Matroska</b>",
-                    "description": "Matroska video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. The lightest choice, since the frames are sent and received without being decoded or encoded, saving most of the CPU spent on video."
+                    "description": "Matroska audio or video for files and shell commands, or one compressed frame per call for external media, with its codec and keyframe flag in FrameData. Holds Opus audio and H264, VP8, VP9 or AV1 video, which are sent and received without being decoded or encoded, saving most of the CPU spent on media."
+                  },
+                  {
+                    "name": "Format::<b>Auto</b>",
+                    "description": "Default. When reading, detects the container from the file itself. When writing to a file, picks the container from its extension, falling back to Ogg for audio and Matroska for video, which are also used for shell commands."
+                  },
+                  {
+                    "name": "Format::<b>Webm</b>",
+                    "description": "WebM audio or video, the web subset of Matroska. Holds Opus audio and VP8, VP9 or AV1 video, sent and received without being decoded or encoded."
+                  },
+                  {
+                    "name": "Format::<b>Mp4</b>",
+                    "description": "MP4 audio or video, also used for .m4a files. H264, VP9 and AV1 video is sent and received as it is, except H264 with B-frames, which is re-encoded, while the audio is decoded when reading and encoded to AAC when writing. Recordings are fragmented MP4, which stays playable if the recording is interrupted. An MP4 read from a shell command must be saved with faststart, because the index at the end of the file can&#39;t be reached from a pipe."
+                  },
+                  {
+                    "name": "Format::<b>Wav</b>",
+                    "description": "WAV audio, uncompressed 16-bit PCM with a header. Recordings are written at the requested sample rate."
+                  },
+                  {
+                    "name": "Format::<b>Flac</b>",
+                    "description": "FLAC audio, lossless and compressed. Recordings are written at the requested sample rate."
                   }
                 ]
               }
@@ -6145,7 +6400,7 @@
                   },
                   {
                     "name": "<b>format</b>: <code>Optional</code>[<code>ntgcalls.Format</code>]",
-                    "description": "Format of the audio exchanged with the source or the destination, Ogg (Opus) if not set. Ignored for devices. Sending Ogg Opus skips the audio encoding and keeps the original quality, since the packets are sent without being encoded again, and are re-encoded only when they don&#39;t match the requested channels or bitrate. When recording to a file or a shell command in Ogg, a single participant is written as-is, while more participants are decoded, mixed and re-encoded, which uses more CPU than recording in PCM."
+                    "description": "Format of the audio exchanged with the source or the destination, AUTO if not set. Ignored for devices. When reading, AUTO detects the container from the file itself. When writing to a file, it picks the container from the extension (.ogg, .opus, .mka, .mkv, .webm, .mp4, .m4a, .wav, .flac) and falls back to Ogg, which is also used for shell commands. Opus audio is sent without being decoded or encoded again and keeps its original quality, while MP3, AAC, FLAC, Vorbis and WAV are decoded and re-encoded to Opus. When recording, Ogg, Matroska and WebM write a single participant as received and decode, mix and re-encode when there are more, while MP4 is always re-encoded to AAC and WAV and FLAC store the decoded audio at the requested sample rate, which uses more CPU than recording in PCM."
                   },
                   {
                     "name": "<b>max_delay_ms</b>: <code>Optional</code>[<code>int</code>]",
@@ -6191,7 +6446,7 @@
                   },
                   {
                     "name": "<b>format</b>: <code>ntg_format*</code>",
-                    "description": "Format of the audio exchanged with the source or the destination, Ogg (Opus) if not set. Ignored for devices. Sending Ogg Opus skips the audio encoding and keeps the original quality, since the packets are sent without being encoded again, and are re-encoded only when they don&#39;t match the requested channels or bitrate. When recording to a file or a shell command in Ogg, a single participant is written as-is, while more participants are decoded, mixed and re-encoded, which uses more CPU than recording in PCM."
+                    "description": "Format of the audio exchanged with the source or the destination, AUTO if not set. Ignored for devices. When reading, AUTO detects the container from the file itself. When writing to a file, it picks the container from the extension (.ogg, .opus, .mka, .mkv, .webm, .mp4, .m4a, .wav, .flac) and falls back to Ogg, which is also used for shell commands. Opus audio is sent without being decoded or encoded again and keeps its original quality, while MP3, AAC, FLAC, Vorbis and WAV are decoded and re-encoded to Opus. When recording, Ogg, Matroska and WebM write a single participant as received and decode, mix and re-encode when there are more, while MP4 is always re-encoded to AAC and WAV and FLAC store the decoded audio at the requested sample rate, which uses more CPU than recording in PCM."
                   },
                   {
                     "name": "<b>max_delay_ms</b>: <code>uint32_t*</code>",
@@ -6237,7 +6492,7 @@
                   },
                   {
                     "name": "<b>format</b><code>?</code>: <code>Format</code>",
-                    "description": "Format of the audio exchanged with the source or the destination, Ogg (Opus) if not set. Ignored for devices. Sending Ogg Opus skips the audio encoding and keeps the original quality, since the packets are sent without being encoded again, and are re-encoded only when they don&#39;t match the requested channels or bitrate. When recording to a file or a shell command in Ogg, a single participant is written as-is, while more participants are decoded, mixed and re-encoded, which uses more CPU than recording in PCM."
+                    "description": "Format of the audio exchanged with the source or the destination, AUTO if not set. Ignored for devices. When reading, AUTO detects the container from the file itself. When writing to a file, it picks the container from the extension (.ogg, .opus, .mka, .mkv, .webm, .mp4, .m4a, .wav, .flac) and falls back to Ogg, which is also used for shell commands. Opus audio is sent without being decoded or encoded again and keeps its original quality, while MP3, AAC, FLAC, Vorbis and WAV are decoded and re-encoded to Opus. When recording, Ogg, Matroska and WebM write a single participant as received and decode, mix and re-encode when there are more, while MP4 is always re-encoded to AAC and WAV and FLAC store the decoded audio at the requested sample rate, which uses more CPU than recording in PCM."
                   },
                   {
                     "name": "<b>maxDelayMs</b><code>?</code>: <code>number</code>",
@@ -6283,7 +6538,7 @@
                   },
                   {
                     "name": "<code>Format</code> <b>format</b>",
-                    "description": "Format of the audio exchanged with the source or the destination, Ogg (Opus) if not set. Ignored for devices. Sending Ogg Opus skips the audio encoding and keeps the original quality, since the packets are sent without being encoded again, and are re-encoded only when they don&#39;t match the requested channels or bitrate. When recording to a file or a shell command in Ogg, a single participant is written as-is, while more participants are decoded, mixed and re-encoded, which uses more CPU than recording in PCM."
+                    "description": "Format of the audio exchanged with the source or the destination, AUTO if not set. Ignored for devices. When reading, AUTO detects the container from the file itself. When writing to a file, it picks the container from the extension (.ogg, .opus, .mka, .mkv, .webm, .mp4, .m4a, .wav, .flac) and falls back to Ogg, which is also used for shell commands. Opus audio is sent without being decoded or encoded again and keeps its original quality, while MP3, AAC, FLAC, Vorbis and WAV are decoded and re-encoded to Opus. When recording, Ogg, Matroska and WebM write a single participant as received and decode, mix and re-encode when there are more, while MP4 is always re-encoded to AAC and WAV and FLAC store the decoded audio at the requested sample rate, which uses more CPU than recording in PCM."
                   },
                   {
                     "name": "<code>Integer</code> <b>max_delay_ms</b>",
@@ -6329,11 +6584,193 @@
                   },
                   {
                     "name": "<b>format</b>: <code>Option&lt;Format&gt;</code>",
-                    "description": "Format of the audio exchanged with the source or the destination, Ogg (Opus) if not set. Ignored for devices. Sending Ogg Opus skips the audio encoding and keeps the original quality, since the packets are sent without being encoded again, and are re-encoded only when they don&#39;t match the requested channels or bitrate. When recording to a file or a shell command in Ogg, a single participant is written as-is, while more participants are decoded, mixed and re-encoded, which uses more CPU than recording in PCM."
+                    "description": "Format of the audio exchanged with the source or the destination, AUTO if not set. Ignored for devices. When reading, AUTO detects the container from the file itself. When writing to a file, it picks the container from the extension (.ogg, .opus, .mka, .mkv, .webm, .mp4, .m4a, .wav, .flac) and falls back to Ogg, which is also used for shell commands. Opus audio is sent without being decoded or encoded again and keeps its original quality, while MP3, AAC, FLAC, Vorbis and WAV are decoded and re-encoded to Opus. When recording, Ogg, Matroska and WebM write a single participant as received and decode, mix and re-encode when there are more, while MP4 is always re-encoded to AAC and WAV and FLAC store the decoded audio at the requested sample rate, which uses more CPU than recording in PCM."
                   },
                   {
                     "name": "<b>max_delay_ms</b>: <code>Option&lt;u32&gt;</code>",
                     "description": "Longest time in milliseconds to wait for a late Opus packet when receiving Ogg Opus, 1000 if not set. Received packets go through a jitter buffer that adapts to the connection up to this limit, and a packet that doesn&#39;t arrive in time is rebuilt from the next one. A lower value lowers the latency of live frames, while a higher value loses fewer packets on unstable connections. Ignored for PCM."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "6a795b9a00230c34",
+      "path": "/NTgCalls/Available Types/AudioInfo.xml",
+      "title": "AudioInfo",
+      "library": "NTgCalls",
+      "kind": "type",
+      "description": "Details of an audio track.",
+      "preview": "Details of an audio track.",
+      "url": "https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioInfo?ref=dev",
+      "languages": [
+        {
+          "id": "python",
+          "label": "Python",
+          "content": {
+            "signature": "<code>class</code> ntgcalls.<b>AudioInfo</b>()",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>str</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>sample_rate</b>: <code>int</code>",
+                    "description": "Sample rate in Hz, or 0 with <code>PLAYBACK</code>, where the requested sample rate is used."
+                  },
+                  {
+                    "name": "<b>channels</b>: <code>int</code>",
+                    "description": "Number of channels, or 0 with <code>PLAYBACK</code>, where the requested channels are used."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>bool</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>bool</code>",
+                    "description": "Whether the audio can be sent or recorded as it is, without re-encoding. It is only a precondition: the bitrate and channels of the call still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "c",
+          "label": "C",
+          "content": {
+            "signature": "<code>struct</code> <b>ntg_audio_info</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>char*</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>sample_rate</b>: <code>uint32_t</code>",
+                    "description": "Sample rate in Hz, or 0 with <code>PLAYBACK</code>, where the requested sample rate is used."
+                  },
+                  {
+                    "name": "<b>channels</b>: <code>uint8_t</code>",
+                    "description": "Number of channels, or 0 with <code>PLAYBACK</code>, where the requested channels are used."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>bool</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>bool</code>",
+                    "description": "Whether the audio can be sent or recorded as it is, without re-encoding. It is only a precondition: the bitrate and channels of the call still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "node",
+          "label": "Node.js",
+          "content": {
+            "signature": "<code>interface</code> <b>AudioInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>string</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>sampleRate</b>: <code>number</code>",
+                    "description": "Sample rate in Hz, or 0 with <code>PLAYBACK</code>, where the requested sample rate is used."
+                  },
+                  {
+                    "name": "<b>channels</b>: <code>number</code>",
+                    "description": "Number of channels, or 0 with <code>PLAYBACK</code>, where the requested channels are used."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>boolean</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>boolean</code>",
+                    "description": "Whether the audio can be sent or recorded as it is, without re-encoding. It is only a precondition: the bitrate and channels of the call still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "java",
+          "label": "Java",
+          "content": {
+            "signature": "<code>class</code> <b>AudioInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<code>String</code> <b>codec</b>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<code>int</code> <b>sample_rate</b>",
+                    "description": "Sample rate in Hz, or 0 with <code>PLAYBACK</code>, where the requested sample rate is used."
+                  },
+                  {
+                    "name": "<code>int</code> <b>channels</b>",
+                    "description": "Number of channels, or 0 with <code>PLAYBACK</code>, where the requested channels are used."
+                  },
+                  {
+                    "name": "<code>boolean</code> <b>supported</b>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<code>boolean</code> <b>passthrough</b>",
+                    "description": "Whether the audio can be sent or recorded as it is, without re-encoding. It is only a precondition: the bitrate and channels of the call still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rust",
+          "label": "Rust",
+          "content": {
+            "signature": "<code>pub struct</code> <b>AudioInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>String</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>sample_rate</b>: <code>u32</code>",
+                    "description": "Sample rate in Hz, or 0 with <code>PLAYBACK</code>, where the requested sample rate is used."
+                  },
+                  {
+                    "name": "<b>channels</b>: <code>u8</code>",
+                    "description": "Number of channels, or 0 with <code>PLAYBACK</code>, where the requested channels are used."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>bool</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>bool</code>",
+                    "description": "Whether the audio can be sent or recorded as it is, without re-encoding. It is only a precondition: the bitrate and channels of the call still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
                   }
                 ]
               }
@@ -7774,6 +8211,168 @@
                   {
                     "name": "<b>screen</b>: <code>Vec&lt;DeviceInfo&gt;</code>",
                     "description": "Screen configuration for the stream."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "d2a72fa74abf8765",
+      "path": "/NTgCalls/Available Types/MediaInfo.xml",
+      "title": "MediaInfo",
+      "library": "NTgCalls",
+      "kind": "type",
+      "description": "What a file contains when read, or what a recording to it would contain.",
+      "preview": "What a file contains when read, or what a recording to it would contain.",
+      "url": "https://pytgcalls.github.io/NTgCalls/Available%20Types/MediaInfo?ref=dev",
+      "languages": [
+        {
+          "id": "python",
+          "label": "Python",
+          "content": {
+            "signature": "<code>class</code> ntgcalls.<b>MediaInfo</b>()",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>container</b>: <code>str</code>",
+                    "description": "Name of the container, as libav calls it. Empty when NTgCalls can&#39;t record to the path."
+                  },
+                  {
+                    "name": "<b>duration_ms</b>: <code>int</code>",
+                    "description": "Duration in milliseconds, or 0 when unknown, as in live streams and with <code>PLAYBACK</code>."
+                  },
+                  {
+                    "name": "<b>audio</b>: <code>Optional</code>[<code>ntgcalls.AudioInfo</code>]",
+                    "description": "The audio track, or <code>None</code> when the file has none or the container can&#39;t record audio."
+                  },
+                  {
+                    "name": "<b>video</b>: <code>Optional</code>[<code>ntgcalls.VideoInfo</code>]",
+                    "description": "The video track, or <code>None</code> when the file has none or the container can&#39;t record video. Cover art is ignored."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "c",
+          "label": "C",
+          "content": {
+            "signature": "<code>struct</code> <b>ntg_media_info</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>container</b>: <code>char*</code>",
+                    "description": "Name of the container, as libav calls it. Empty when NTgCalls can&#39;t record to the path."
+                  },
+                  {
+                    "name": "<b>duration_ms</b>: <code>int64_t</code>",
+                    "description": "Duration in milliseconds, or 0 when unknown, as in live streams and with <code>PLAYBACK</code>."
+                  },
+                  {
+                    "name": "<b>audio</b>: <code>ntg_audio_info*</code>",
+                    "description": "The audio track, or <code>None</code> when the file has none or the container can&#39;t record audio."
+                  },
+                  {
+                    "name": "<b>video</b>: <code>ntg_video_info*</code>",
+                    "description": "The video track, or <code>None</code> when the file has none or the container can&#39;t record video. Cover art is ignored."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "node",
+          "label": "Node.js",
+          "content": {
+            "signature": "<code>interface</code> <b>MediaInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>container</b>: <code>string</code>",
+                    "description": "Name of the container, as libav calls it. Empty when NTgCalls can&#39;t record to the path."
+                  },
+                  {
+                    "name": "<b>durationMs</b>: <code>bigint</code>",
+                    "description": "Duration in milliseconds, or 0 when unknown, as in live streams and with <code>PLAYBACK</code>."
+                  },
+                  {
+                    "name": "<b>audio</b><code>?</code>: <code>AudioInfo</code>",
+                    "description": "The audio track, or <code>None</code> when the file has none or the container can&#39;t record audio."
+                  },
+                  {
+                    "name": "<b>video</b><code>?</code>: <code>VideoInfo</code>",
+                    "description": "The video track, or <code>None</code> when the file has none or the container can&#39;t record video. Cover art is ignored."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "java",
+          "label": "Java",
+          "content": {
+            "signature": "<code>class</code> <b>MediaInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<code>String</code> <b>container</b>",
+                    "description": "Name of the container, as libav calls it. Empty when NTgCalls can&#39;t record to the path."
+                  },
+                  {
+                    "name": "<code>long</code> <b>duration_ms</b>",
+                    "description": "Duration in milliseconds, or 0 when unknown, as in live streams and with <code>PLAYBACK</code>."
+                  },
+                  {
+                    "name": "<code>AudioInfo</code> <b>audio</b>",
+                    "description": "The audio track, or <code>None</code> when the file has none or the container can&#39;t record audio."
+                  },
+                  {
+                    "name": "<code>VideoInfo</code> <b>video</b>",
+                    "description": "The video track, or <code>None</code> when the file has none or the container can&#39;t record video. Cover art is ignored."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rust",
+          "label": "Rust",
+          "content": {
+            "signature": "<code>pub struct</code> <b>MediaInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>container</b>: <code>String</code>",
+                    "description": "Name of the container, as libav calls it. Empty when NTgCalls can&#39;t record to the path."
+                  },
+                  {
+                    "name": "<b>duration_ms</b>: <code>i64</code>",
+                    "description": "Duration in milliseconds, or 0 when unknown, as in live streams and with <code>PLAYBACK</code>."
+                  },
+                  {
+                    "name": "<b>audio</b>: <code>Option&lt;AudioInfo&gt;</code>",
+                    "description": "The audio track, or <code>None</code> when the file has none or the container can&#39;t record audio."
+                  },
+                  {
+                    "name": "<b>video</b>: <code>Option&lt;VideoInfo&gt;</code>",
+                    "description": "The video track, or <code>None</code> when the file has none or the container can&#39;t record video. Cover art is ignored."
                   }
                 ]
               }
@@ -9318,7 +9917,7 @@
                   },
                   {
                     "name": "<b>format</b>: <code>Optional</code>[<code>ntgcalls.Format</code>]",
-                    "description": "Format of the video read from the source, Matroska if not set. Ignored for devices and desktop capture. A Matroska stream carrying H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. When playing back to a file or a shell command, I420 composes every participant into an animated grid at the given size and frame rate, while Matroska writes a single participant as received and decodes, composes and re-encodes when there are more, which uses more CPU. External media always receives each participant separately."
+                    "description": "Format of the video read from the source or written to the destination, AUTO if not set. Ignored for devices and desktop capture. When reading, AUTO detects the container from the file itself, and H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. H264 with B-frames, used by most phone and downloaded videos, is always re-encoded. When writing to a file, AUTO picks Matroska, WebM or MP4 from the extension and falls back to Matroska, which is also used for shell commands. I420 composes every participant into an animated grid at the given size and frame rate, while the other formats write a single participant as received and decode, compose and re-encode when there are more, which uses more CPU. External media always receives each participant separately."
                   }
                 ]
               }
@@ -9360,7 +9959,7 @@
                   },
                   {
                     "name": "<b>format</b>: <code>ntg_format*</code>",
-                    "description": "Format of the video read from the source, Matroska if not set. Ignored for devices and desktop capture. A Matroska stream carrying H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. When playing back to a file or a shell command, I420 composes every participant into an animated grid at the given size and frame rate, while Matroska writes a single participant as received and decodes, composes and re-encodes when there are more, which uses more CPU. External media always receives each participant separately."
+                    "description": "Format of the video read from the source or written to the destination, AUTO if not set. Ignored for devices and desktop capture. When reading, AUTO detects the container from the file itself, and H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. H264 with B-frames, used by most phone and downloaded videos, is always re-encoded. When writing to a file, AUTO picks Matroska, WebM or MP4 from the extension and falls back to Matroska, which is also used for shell commands. I420 composes every participant into an animated grid at the given size and frame rate, while the other formats write a single participant as received and decode, compose and re-encode when there are more, which uses more CPU. External media always receives each participant separately."
                   }
                 ]
               }
@@ -9402,7 +10001,7 @@
                   },
                   {
                     "name": "<b>format</b><code>?</code>: <code>Format</code>",
-                    "description": "Format of the video read from the source, Matroska if not set. Ignored for devices and desktop capture. A Matroska stream carrying H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. When playing back to a file or a shell command, I420 composes every participant into an animated grid at the given size and frame rate, while Matroska writes a single participant as received and decodes, composes and re-encodes when there are more, which uses more CPU. External media always receives each participant separately."
+                    "description": "Format of the video read from the source or written to the destination, AUTO if not set. Ignored for devices and desktop capture. When reading, AUTO detects the container from the file itself, and H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. H264 with B-frames, used by most phone and downloaded videos, is always re-encoded. When writing to a file, AUTO picks Matroska, WebM or MP4 from the extension and falls back to Matroska, which is also used for shell commands. I420 composes every participant into an animated grid at the given size and frame rate, while the other formats write a single participant as received and decode, compose and re-encode when there are more, which uses more CPU. External media always receives each participant separately."
                   }
                 ]
               }
@@ -9444,7 +10043,7 @@
                   },
                   {
                     "name": "<code>Format</code> <b>format</b>",
-                    "description": "Format of the video read from the source, Matroska if not set. Ignored for devices and desktop capture. A Matroska stream carrying H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. When playing back to a file or a shell command, I420 composes every participant into an animated grid at the given size and frame rate, while Matroska writes a single participant as received and decodes, composes and re-encodes when there are more, which uses more CPU. External media always receives each participant separately."
+                    "description": "Format of the video read from the source or written to the destination, AUTO if not set. Ignored for devices and desktop capture. When reading, AUTO detects the container from the file itself, and H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. H264 with B-frames, used by most phone and downloaded videos, is always re-encoded. When writing to a file, AUTO picks Matroska, WebM or MP4 from the extension and falls back to Matroska, which is also used for shell commands. I420 composes every participant into an animated grid at the given size and frame rate, while the other formats write a single participant as received and decode, compose and re-encode when there are more, which uses more CPU. External media always receives each participant separately."
                   }
                 ]
               }
@@ -9486,7 +10085,229 @@
                   },
                   {
                     "name": "<b>format</b>: <code>Option&lt;Format&gt;</code>",
-                    "description": "Format of the video read from the source, Matroska if not set. Ignored for devices and desktop capture. A Matroska stream carrying H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. When playing back to a file or a shell command, I420 composes every participant into an animated grid at the given size and frame rate, while Matroska writes a single participant as received and decodes, composes and re-encodes when there are more, which uses more CPU. External media always receives each participant separately."
+                    "description": "Format of the video read from the source or written to the destination, AUTO if not set. Ignored for devices and desktop capture. When reading, AUTO detects the container from the file itself, and H264 without B-frames, VP8, VP9 or AV1 is sent without re-encoding when it matches the negotiated codec, and re-encoded only when it doesn&#39;t, or briefly when a viewer needs a keyframe. H264 with B-frames, used by most phone and downloaded videos, is always re-encoded. When writing to a file, AUTO picks Matroska, WebM or MP4 from the extension and falls back to Matroska, which is also used for shell commands. I420 composes every participant into an animated grid at the given size and frame rate, while the other formats write a single participant as received and decode, compose and re-encode when there are more, which uses more CPU. External media always receives each participant separately."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "4e17061463c9680c",
+      "path": "/NTgCalls/Available Types/VideoInfo.xml",
+      "title": "VideoInfo",
+      "library": "NTgCalls",
+      "kind": "type",
+      "description": "Details of a video track.",
+      "preview": "Details of a video track.",
+      "url": "https://pytgcalls.github.io/NTgCalls/Available%20Types/VideoInfo?ref=dev",
+      "languages": [
+        {
+          "id": "python",
+          "label": "Python",
+          "content": {
+            "signature": "<code>class</code> ntgcalls.<b>VideoInfo</b>()",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>str</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>width</b>: <code>int</code>",
+                    "description": "Video width in pixels."
+                  },
+                  {
+                    "name": "<b>height</b>: <code>int</code>",
+                    "description": "Video height in pixels."
+                  },
+                  {
+                    "name": "<b>frame_rate</b>: <code>float</code>",
+                    "description": "Average frames per second, or 0 when unknown."
+                  },
+                  {
+                    "name": "<b>b_frames</b>: <code>bool</code>",
+                    "description": "Whether the video uses B-frames, which can&#39;t be sent as they are."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>bool</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>bool</code>",
+                    "description": "Whether the video can be sent or recorded as it is, without re-encoding. It is only a precondition: the codec and size negotiated by the call, and the size and frame rate requested, still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "c",
+          "label": "C",
+          "content": {
+            "signature": "<code>struct</code> <b>ntg_video_info</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>char*</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>width</b>: <code>uint16_t</code>",
+                    "description": "Video width in pixels."
+                  },
+                  {
+                    "name": "<b>height</b>: <code>uint16_t</code>",
+                    "description": "Video height in pixels."
+                  },
+                  {
+                    "name": "<b>frame_rate</b>: <code>double</code>",
+                    "description": "Average frames per second, or 0 when unknown."
+                  },
+                  {
+                    "name": "<b>b_frames</b>: <code>bool</code>",
+                    "description": "Whether the video uses B-frames, which can&#39;t be sent as they are."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>bool</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>bool</code>",
+                    "description": "Whether the video can be sent or recorded as it is, without re-encoding. It is only a precondition: the codec and size negotiated by the call, and the size and frame rate requested, still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "node",
+          "label": "Node.js",
+          "content": {
+            "signature": "<code>interface</code> <b>VideoInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>string</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>width</b>: <code>number</code>",
+                    "description": "Video width in pixels."
+                  },
+                  {
+                    "name": "<b>height</b>: <code>number</code>",
+                    "description": "Video height in pixels."
+                  },
+                  {
+                    "name": "<b>frameRate</b>: <code>number</code>",
+                    "description": "Average frames per second, or 0 when unknown."
+                  },
+                  {
+                    "name": "<b>bFrames</b>: <code>boolean</code>",
+                    "description": "Whether the video uses B-frames, which can&#39;t be sent as they are."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>boolean</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>boolean</code>",
+                    "description": "Whether the video can be sent or recorded as it is, without re-encoding. It is only a precondition: the codec and size negotiated by the call, and the size and frame rate requested, still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "java",
+          "label": "Java",
+          "content": {
+            "signature": "<code>class</code> <b>VideoInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<code>String</code> <b>codec</b>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<code>int</code> <b>width</b>",
+                    "description": "Video width in pixels."
+                  },
+                  {
+                    "name": "<code>int</code> <b>height</b>",
+                    "description": "Video height in pixels."
+                  },
+                  {
+                    "name": "<code>double</code> <b>frame_rate</b>",
+                    "description": "Average frames per second, or 0 when unknown."
+                  },
+                  {
+                    "name": "<code>boolean</code> <b>b_frames</b>",
+                    "description": "Whether the video uses B-frames, which can&#39;t be sent as they are."
+                  },
+                  {
+                    "name": "<code>boolean</code> <b>supported</b>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<code>boolean</code> <b>passthrough</b>",
+                    "description": "Whether the video can be sent or recorded as it is, without re-encoding. It is only a precondition: the codec and size negotiated by the call, and the size and frame rate requested, still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "rust",
+          "label": "Rust",
+          "content": {
+            "signature": "<code>pub struct</code> <b>VideoInfo</b>",
+            "sections": [
+              {
+                "title": "PARAMETERS",
+                "items": [
+                  {
+                    "name": "<b>codec</b>: <code>String</code>",
+                    "description": "Name of the codec, as libav calls it. With <code>PLAYBACK</code> it is the codec the recording is written with, and it is empty for video, which depends on the call."
+                  },
+                  {
+                    "name": "<b>width</b>: <code>u16</code>",
+                    "description": "Video width in pixels."
+                  },
+                  {
+                    "name": "<b>height</b>: <code>u16</code>",
+                    "description": "Video height in pixels."
+                  },
+                  {
+                    "name": "<b>frame_rate</b>: <code>f64</code>",
+                    "description": "Average frames per second, or 0 when unknown."
+                  },
+                  {
+                    "name": "<b>b_frames</b>: <code>bool</code>",
+                    "description": "Whether the video uses B-frames, which can&#39;t be sent as they are."
+                  },
+                  {
+                    "name": "<b>supported</b>: <code>bool</code>",
+                    "description": "Whether NTgCalls can read or write this track without FFmpeg."
+                  },
+                  {
+                    "name": "<b>passthrough</b>: <code>bool</code>",
+                    "description": "Whether the video can be sent or recorded as it is, without re-encoding. It is only a precondition: the codec and size negotiated by the call, and the size and frame rate requested, still decide. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a>."
                   }
                 ]
               }
@@ -11384,6 +12205,8 @@
       "title": "Rejoin Conference",
       "library": "NTgCalls",
       "kind": "method",
+      "description": "This method allows rejoining a conference call with a new connection and a fresh end-to-end session, for example after an end-to-end failure, while keeping its media streams playing from the same position. The returned join parameters have to be sent to Telegram again with phone.joinGroupCall.",
+      "preview": "This method allows rejoining a conference call with a new connection and a fresh end-to-end session, for example after an end-to-end failure, while keeping its media streams playing from the same position. The returne...",
       "url": "https://pytgcalls.github.io/NTgCalls/Basic%20Methods/Rejoin%20Conference?ref=dev",
       "languages": [
         {
@@ -11577,6 +12400,8 @@
       "title": "Rejoin",
       "library": "NTgCalls",
       "kind": "method",
+      "description": "This method allows replacing the connection of a group call with a new one while keeping its media streams playing from the same position. The returned join payload has to be sent to Telegram again with phone.joinGroupCall, and the response passed to Connect.",
+      "preview": "This method allows replacing the connection of a group call with a new one while keeping its media streams playing from the same position. The returned join payload has to be sent to Telegram again with phone.joinGrou...",
       "url": "https://pytgcalls.github.io/NTgCalls/Basic%20Methods/Rejoin?ref=dev",
       "languages": [
         {
@@ -12540,6 +13365,8 @@
       "title": "On E2E Failure",
       "library": "NTgCalls",
       "kind": "callback",
+      "description": "This method allows you to register a callback that is invoked when the end-to-end chain of a conference call can no longer be applied, for example after the participant has been removed from the call. The call can no longer be decrypted and has to be left and joined again.",
+      "preview": "This method allows you to register a callback that is invoked when the end-to-end chain of a conference call can no longer be applied, for example after the participant has been removed from the call. The call can no ...",
       "url": "https://pytgcalls.github.io/NTgCalls/Callbacks/On%20E2E%20Failure?ref=dev",
       "languages": [
         {
@@ -12685,6 +13512,8 @@
       "title": "On E2E Participants",
       "library": "NTgCalls",
       "kind": "callback",
+      "description": "This method allows you to register a callback that is invoked when the users holding the key of a conference call change, as recorded by its end-to-end chain. Users still in this list after leaving the call can be removed with Create Remove Block.",
+      "preview": "This method allows you to register a callback that is invoked when the users holding the key of a conference call change, as recorded by its end-to-end chain. Users still in this list after leaving the call can be rem...",
       "url": "https://pytgcalls.github.io/NTgCalls/Callbacks/On%20E2E%20Participants?ref=dev",
       "languages": [
         {
@@ -12705,7 +13534,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>participants</b>: <code>list[int]</code>"
+                    "name": "<b>participants</b>: <code>list[int]</code>",
+                    "description": "The ids of the users holding the key of the call."
                   }
                 ]
               }
@@ -12751,7 +13581,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>participants</b>: <code>const int64_t*</code>, <b>participants_len</b>: <code>size_t</code>"
+                    "name": "<b>participants</b>: <code>const int64_t*</code>, <b>participants_len</b>: <code>size_t</code>",
+                    "description": "The ids of the users holding the key of the call."
                   },
                   {
                     "name": "<b>user_data</b>: <code>void*</code>",
@@ -12780,7 +13611,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>participants</b>: <code>bigint[]</code>"
+                    "name": "<b>participants</b>: <code>bigint[]</code>",
+                    "description": "The ids of the users holding the key of the call."
                   }
                 ]
               }
@@ -12805,7 +13637,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<code>java.util.List&lt;Long&gt;</code> <b>participants</b>"
+                    "name": "<code>java.util.List&lt;Long&gt;</code> <b>participants</b>",
+                    "description": "The ids of the users holding the key of the call."
                   }
                 ]
               }
@@ -12830,7 +13663,8 @@
                     "description": "Unique identifier of a chat."
                   },
                   {
-                    "name": "<b>participants</b>: <code>Vec&lt;i64&gt;</code>"
+                    "name": "<b>participants</b>: <code>Vec&lt;i64&gt;</code>",
+                    "description": "The ids of the users holding the key of the call."
                   }
                 ]
               }
@@ -17686,8 +18520,8 @@
       "title": "Changelog 4.0.X: Py-TgCalls v4.0.X",
       "library": "PyTgCalls",
       "kind": "changelog",
-      "description": "Studio-Quality Audio, Lower CPU and Video Recording!<br><br><h3>What&#39;s new?</h3> <ul><li><b>Opus Passthrough:</b> When the audio is already Opus, as in WebM, Ogg and most YouTube streams, it is sent without decoding and re-encoding, keeping its original quality and skipping the CPU spent on audio encoding.</li> <li><b>Video Passthrough:</b> H264 without B-frames, VP8, VP9 and AV1 videos are sent as they are, saving most of the CPU spent on video. A viewer joining the call still gets a picture right away, and the video is re-encoded automatically when it doesn&#39;t match the call or the bandwidth drops.</li> <li><b>Video Recording:</b> <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/RecordStream?ref=dev\">RecordStream</a> now records the camera and the screen sharing to a file, composing the participants into an animated grid.</li> <li><b>Stutter-Free Opus Recording:</b> Received Opus goes through a jitter buffer that adapts to the connection, and late or lost packets are rebuilt instead of becoming silence, so recordings and external frames stay smooth even when the call comes from a distant data center. The new <code>max_delay_ms</code> parameter of <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioDescription?ref=dev\">AudioDescription</a> caps how long it waits for a late packet.</li> <li><b>Lightweight Recording:</b> <code>.opus</code> and <code>.mkv</code> recordings are written without FFmpeg, saving a single participant exactly as received.</li> <li><b>Compressed External Media:</b> The new <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Enums/Format?ref=dev\">Format</a> selects compressed or raw media, and <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/FrameData?ref=dev\">FrameData</a> now carries the <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Enums/Codec?ref=dev\">Codec</a> and keyframe flag of each frame, so Opus packets and compressed video can be sent and received directly.</li> <li><b>Studio-Grade Audio:</b> Audio now reaches listeners up to 90% closer to the original in our tests, with richer highs and full stereo separation.</li> <li><b>Audio Quality Control:</b> The new <code>bitrate</code> parameter of <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioParameters?ref=dev\">AudioParameters</a> and <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioDescription?ref=dev\">AudioDescription</a> lets you pick the audio quality, and it can be changed while the call is running.</li> <li><b>New Audio Presets:</b> <a href=\"https://pytgcalls.github.io/PyTgCalls/Available%20Enums/AudioQuality?ref=dev\">AudioQuality</a> <code>STUDIO</code> and <code>HIGH</code> now stream in stereo at a much higher quality, the new <code>MASTER</code> preset streams at the maximum Opus bitrate of 510 kbps, and the new <code>VOICE</code> preset sounds like the official Telegram clients.</li> <li><b>Group Call Messages:</b> Read, send and delete the messages of the group call chat with <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Methods/Send%20Message?ref=dev\">send_message()</a>, <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Methods/Delete%20Messages?ref=dev\">delete_messages()</a> and the new <code>filters.call_message()</code> filter, with formatting through Telegram Bot API HTML.</li> <li><b>musl Support:</b> NTgCalls now ships musllinux builds for x86_64 and arm64 on PyPI, npm and crates.io, so it runs on Alpine Linux out of the box.</li> <li><b>Automatic Rejoin:</b> Like the official clients, Py-TgCalls now checks whether it is still in the call while reconnecting and rejoins on its own when Telegram drops it, when the end-to-end encryption of a conference fails or when the stream reports that the userbot left. The stream keeps playing from where it was, and the screen sharing and the invite link are restored.</li> <li><b>Conference Participant Tracking:</b> Participants who left an end-to-end encrypted conference are removed from its blockchain, so they can no longer decrypt it, and <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Types/GroupCallParticipant?ref=dev\">GroupCallParticipant</a> now reports through <code>has_e2e_key</code> whether each participant holds the key.</li> <li><b>Clearer Errors:</b> A missing FFmpeg now raises a clear <code>No executable found for the command</code> error instead of an internal one.</li> <li><b>Optional Arguments:</b> Optional fields of NTgCalls types can now be omitted in Python and Java, so <code>MediaDescription(microphone=...)</code> works without passing every source.</li>  <li><b>Bug Fixes:</b> Addressed various bugs for a more stable experience.</li></ul> <h3>Breaking Changes</h3> <ul><li>The <code>bitrate</code> parameter of <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioParameters?ref=dev\">AudioParameters</a> has been renamed to <code>sample_rate</code>, while <code>bitrate</code> now sets the Opus encoder bitrate. <br><pre><code class=\"language-diff\">  from pytgcalls.types.raw import AudioParameters\n  \n  AudioParameters(\n-     bitrate=48000,\n+     sample_rate=48000,\n      channels=2,\n+     bitrate=128000,\n  )</code></pre><br></li> <li>The default <code>AudioQuality.HIGH</code> now streams in stereo at a higher quality, which uses more upload bandwidth. Use <code>AudioQuality.VOICE</code> to keep the previous outgoing audio.</li> <li>NTgCalls now expects compressed media by default: <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioDescription?ref=dev\">AudioDescription</a> reads Ogg Opus and <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/VideoDescription?ref=dev\">VideoDescription</a> reads Matroska. Raw PCM and I420 sources now need the <code>format</code> parameter. The Py-TgCalls raw <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioStream?ref=dev\">AudioStream</a> and <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/VideoStream?ref=dev\">VideoStream</a> keep PCM and I420 as their default. <br><pre><code class=\"language-diff\">- from ntgcalls import AudioDescription, MediaSource\n+ from ntgcalls import AudioDescription, Format, MediaSource\n  \n  AudioDescription(\n      MediaSource.SHELL, 48000, 2,\n      &#39;ffmpeg -i input.mp3 -f s16le pipe:1&#39;, False,\n+     format=Format.PCM,\n  )</code></pre><br></li> <li><a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/FrameData?ref=dev\">FrameData</a> now requires the <code>codec</code> and <code>keyframe</code> of the frame. <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Methods/Send%20Frame?ref=dev\">send_frame()</a> fills them in for raw frames when they are not given. <br><pre><code class=\"language-diff\">- from ntgcalls import FrameData, VideoRotation\n+ from ntgcalls import Codec, FrameData, VideoRotation\n  \n- FrameData(0, VideoRotation.VIDEO_ROTATION_0, 1280, 720)\n+ FrameData(0, VideoRotation.VIDEO_ROTATION_0, 1280, 720, Codec.I420, True)</code></pre><br></li></ul>",
-      "preview": "Studio-Quality Audio, Lower CPU and Video Recording! What's new? Opus Passthrough: When the audio is already Opus, as in WebM, Ogg and most YouTube streams, it is sent without decoding and re-encoding, keeping its ori...",
+      "description": "Studio-Quality Audio, Lower CPU and Video Recording!<br><br><h3>What&#39;s new?</h3> <ul><li><b>Passthrough:</b> Media that already matches the call is sent as it is, without decoding and encoding it again. Opus audio, as in WebM, Ogg and most YouTube streams, keeps its original quality and skips the audio encoding, while H264 without B-frames, VP8, VP9 and AV1 videos save most of the CPU spent on video. Anything else is re-encoded automatically, and NTgCalls logs which one happens and why. See <a href=\"https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev\">Passthrough</a> to get the most out of it.</li> <li><b>Studio-Grade Audio:</b> Audio now reaches listeners up to 90% closer to the original in our tests, with richer highs and full stereo separation. <a href=\"https://pytgcalls.github.io/PyTgCalls/Available%20Enums/AudioQuality?ref=dev\">AudioQuality</a> <code>STUDIO</code> and <code>HIGH</code> now stream in stereo, the new <code>MASTER</code> preset streams at the maximum Opus bitrate of 510 kbps, and the new <code>VOICE</code> preset sounds like the official Telegram clients.</li> <li><b>Audio Quality Control:</b> The new <code>bitrate</code> parameter of <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioParameters?ref=dev\">AudioParameters</a> and <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioDescription?ref=dev\">AudioDescription</a> lets you pick the audio quality, and it can be changed while the call is running.</li> <li><b>Video Recording:</b> <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/RecordStream?ref=dev\">RecordStream</a> now records the camera and the screen sharing to a file, composing the participants into an animated grid.</li> <li><b>Recording Without FFmpeg:</b> <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/RecordStream?ref=dev\">RecordStream</a> writes <code>.ogg</code>, <code>.opus</code>, <code>.mka</code>, <code>.mkv</code>, <code>.webm</code>, <code>.mp4</code>, <code>.m4a</code>, <code>.wav</code> and <code>.flac</code> on its own. Ogg, Matroska and WebM save a single participant exactly as received, MP4 stores AAC audio, and WAV and FLAC follow the requested sample rate.</li> <li><b>Playback Without FFmpeg:</b> Local MP3, M4A (AAC and ALAC), FLAC, WAV, AIFF, Ogg, Opus, MKV, WebM and MP4 files are now read by NTgCalls itself, skipping FFmpeg even when it is installed, so they start faster and also play where FFmpeg isn&#39;t installed, like slim Docker images. FFmpeg is still used for links, images and custom <code>ffmpeg_parameters</code>, and the new <a href=\"https://pytgcalls.github.io/NTgCalls/Advanced%20Methods/Get%20Media%20Info?ref=dev\">get_media_info()</a> tells what a file contains and whether it can be played or recorded without it. The new <code>AUTO</code> <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Enums/Format?ref=dev\">Format</a>, now the default, detects the container of a file when reading and picks it from the extension when writing, and <code>WEBM</code>, <code>MP4</code>, <code>WAV</code> and <code>FLAC</code> join the formats you can choose. Videos with B-frames, like most phone recordings and downloads, now play by being re-encoded.</li> <li><b>Stutter-Free Opus Recording:</b> Received Opus goes through a jitter buffer that adapts to the connection, and late or lost packets are rebuilt instead of becoming silence, so recordings and external frames stay smooth even when the call comes from a distant data center. The new <code>max_delay_ms</code> parameter of <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioDescription?ref=dev\">AudioDescription</a> caps how long it waits for a late packet.</li> <li><b>Compressed External Media:</b> The new <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Enums/Format?ref=dev\">Format</a> selects compressed or raw media, and <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/FrameData?ref=dev\">FrameData</a> now carries the <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Enums/Codec?ref=dev\">Codec</a> and keyframe flag of each frame, so Opus packets and compressed video can be sent and received directly.</li> <li><b>Automatic Rejoin:</b> Like the official clients, Py-TgCalls now checks whether it is still in the call while reconnecting and rejoins on its own when Telegram drops it, when the end-to-end encryption of a conference fails or when the stream reports that the userbot left. The stream keeps playing from where it was, and the screen sharing and the invite link are restored.</li> <li><b>Conference Participant Tracking:</b> Participants who left an end-to-end encrypted conference are removed from its blockchain, so they can no longer decrypt it, and <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Types/GroupCallParticipant?ref=dev\">GroupCallParticipant</a> now reports through <code>has_e2e_key</code> whether each participant holds the key.</li> <li><b>Group Call Messages:</b> Read, send and delete the messages of the group call chat with <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Methods/Send%20Message?ref=dev\">send_message()</a>, <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Methods/Delete%20Messages?ref=dev\">delete_messages()</a> and the new <code>filters.call_message()</code> filter, with formatting through Telegram Bot API HTML.</li> <li><b>musl Support:</b> NTgCalls now ships musllinux builds for x86_64 and arm64 on PyPI, npm and crates.io, so it runs on Alpine Linux out of the box.</li> <li><b>Clearer Errors:</b> A missing FFmpeg now raises a clear <code>No executable found for the command</code> error instead of an internal one, and a file with an unsupported codec is rejected right away with the name of the codec.</li> <li><b>Optional Arguments:</b> Optional fields of NTgCalls types can now be omitted in Python and Java, so <code>MediaDescription(microphone=...)</code> works without passing every source.</li>  <li><b>Bug Fixes:</b> Addressed various bugs for a more stable experience.</li></ul> <h3>Breaking Changes</h3> <ul><li>The <code>bitrate</code> parameter of <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioParameters?ref=dev\">AudioParameters</a> has been renamed to <code>sample_rate</code>, while <code>bitrate</code> now sets the Opus encoder bitrate. <br><pre><code class=\"language-diff\">  from pytgcalls.types.raw import AudioParameters\n  \n  AudioParameters(\n-     bitrate=48000,\n+     sample_rate=48000,\n      channels=2,\n+     bitrate=128000,\n  )</code></pre><br></li> <li>The default <code>AudioQuality.HIGH</code> now streams in stereo at a higher quality, which uses more upload bandwidth. Use <code>AudioQuality.VOICE</code> to keep the previous outgoing audio.</li> <li>NTgCalls now expects a container by default: <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/AudioDescription?ref=dev\">AudioDescription</a> and <a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/VideoDescription?ref=dev\">VideoDescription</a> detect it with <code>AUTO</code>. Raw PCM and I420 sources now need the <code>format</code> parameter. The Py-TgCalls raw <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioStream?ref=dev\">AudioStream</a> and <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/VideoStream?ref=dev\">VideoStream</a> keep PCM and I420 as their default. <br><pre><code class=\"language-diff\">- from ntgcalls import AudioDescription, MediaSource\n+ from ntgcalls import AudioDescription, Format, MediaSource\n  \n  AudioDescription(\n      MediaSource.SHELL, 48000, 2,\n      &#39;ffmpeg -i input.mp3 -f s16le pipe:1&#39;, False,\n+     format=Format.PCM,\n  )</code></pre><br></li> <li><a href=\"https://pytgcalls.github.io/NTgCalls/Available%20Types/FrameData?ref=dev\">FrameData</a> now requires the <code>codec</code> and <code>keyframe</code> of the frame. <a href=\"https://pytgcalls.github.io/PyTgCalls/Advanced%20Methods/Send%20Frame?ref=dev\">send_frame()</a> fills them in for raw frames when they are not given. <br><pre><code class=\"language-diff\">- from ntgcalls import FrameData, VideoRotation\n+ from ntgcalls import Codec, FrameData, VideoRotation\n  \n- FrameData(0, VideoRotation.VIDEO_ROTATION_0, 1280, 720)\n+ FrameData(0, VideoRotation.VIDEO_ROTATION_0, 1280, 720, Codec.I420, True)</code></pre><br></li></ul>",
+      "preview": "Studio-Quality Audio, Lower CPU and Video Recording! What's new? Passthrough: Media that already matches the call is sent as it is, without decoding and encoding it again. Opus audio, as in WebM, Ogg and most YouTube ...",
       "url": "https://pytgcalls.github.io/PyTgCalls/Changelogs?ref=dev#40X"
     },
     {
@@ -18219,7 +19053,7 @@
       "title": "Install Guide",
       "library": "PyTgCalls",
       "kind": "guide",
-      "description": "Being a modern Python library, <b>Py-TgCalls</b> requires Python 3.10+ to be installed in your system. We recommend using the latest versions of both Python 3 and pip.<ul><li>Get Python 3 from the <a href=\"https://www.python.org/downloads/\">Python website</a> or use your package manager.</li> <li>Get pip by following the instructions <a href=\"https://pip.pypa.io/en/latest/installing/\">here</a>.</li></ul><blockquote><b>IMPORTANT</b><br>Py-TgCalls only supports <b>Python 3</b>, starting from version 3.10.</blockquote><hr/><h2>Install Py-TgCalls</h2>The easiest way to install and upgrade Py-TgCalls to its latest stable version is by using pip:<pre><code class=\"language-bash\">$ pip3 install -U py-tgcalls</code></pre><h2>Bleeding Edge</h2>Py-TgCalls is always evolving: although new releases on PyPI are only published when a significant number of changes are added, this doesn’t mean you can’t try new features right now! In case you’d like to try out the latest Py-TgCalls’ features, the <a href=\"https://github.com/pytgcalls/pytgcalls\">GitHub repo</a> is constantly updated with new changes; you can install the development version straight from the <code>master</code> branch using this command (note “master.zip” in the link):<pre><code class=\"language-bash\">$ pip3 install -U git+https://github.com/pytgcalls/pytgcalls</code></pre><h2>Verifying</h2>To verify that Py-TgCalls is correctly installed, open a Python shell and import it. If no errors show up you are good to go.<pre><code class=\"language-python\">&gt;&gt;&gt; import pytgcalls\n&gt;&gt;&gt; pytgcalls.__version__\n&#39;4.0.0b4&#39;</code></pre>",
+      "description": "Being a modern Python library, <b>Py-TgCalls</b> requires Python 3.10+ to be installed in your system. We recommend using the latest versions of both Python 3 and pip.<ul><li>Get Python 3 from the <a href=\"https://www.python.org/downloads/\">Python website</a> or use your package manager.</li> <li>Get pip by following the instructions <a href=\"https://pip.pypa.io/en/latest/installing/\">here</a>.</li></ul><blockquote><b>IMPORTANT</b><br>Py-TgCalls only supports <b>Python 3</b>, starting from version 3.10.</blockquote><hr/><h2>Install Py-TgCalls</h2>The easiest way to install and upgrade Py-TgCalls to its latest stable version is by using pip:<pre><code class=\"language-bash\">$ pip3 install -U py-tgcalls</code></pre><h2>Bleeding Edge</h2>Py-TgCalls is always evolving: although new releases on PyPI are only published when a significant number of changes are added, this doesn’t mean you can’t try new features right now! In case you’d like to try out the latest Py-TgCalls’ features, the <a href=\"https://github.com/pytgcalls/pytgcalls\">GitHub repo</a> is constantly updated with new changes; you can install the development version straight from the <code>master</code> branch using this command (note “master.zip” in the link):<pre><code class=\"language-bash\">$ pip3 install -U git+https://github.com/pytgcalls/pytgcalls</code></pre><h2>Verifying</h2>To verify that Py-TgCalls is correctly installed, open a Python shell and import it. If no errors show up you are good to go.<pre><code class=\"language-python\">&gt;&gt;&gt; import pytgcalls\n&gt;&gt;&gt; pytgcalls.__version__\n&#39;4.0.0b5&#39;</code></pre>",
       "preview": "Being a modern Python library, Py-TgCalls requires Python 3.10+ to be installed in your system. We recommend using the latest versions of both Python 3 and pip.Get Python 3 from the Python website or use your package ...",
       "url": "https://pytgcalls.github.io/PyTgCalls/Install%20Guide?ref=dev",
       "content": {
@@ -18266,6 +19100,22 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "id": "033601f0f2a5b12e",
+      "path": "/PyTgCalls/Passthrough.xml",
+      "title": "Passthrough",
+      "library": "PyTgCalls",
+      "kind": "guide",
+      "description": "When your media already matches the call, NTgCalls sends it as it is, without decoding and encoding it again. You get the original quality and a fraction of the CPU.<blockquote><b>NOTE</b><br><ul><li>Opus audio, from Ogg, WebM, MKA or YouTube</li> <li>H264 Baseline, Main or High without B-frames, VP8, VP9 or AV1, in the codec and size of the call</li> <li>Recording one participant to <code>.ogg</code>, <code>.mkv</code> or <code>.webm</code></li></ul></blockquote><blockquote><b>WARNING</b><br><ul><li>MP3, AAC, FLAC, Vorbis and WAV audio</li> <li>H264 with B-frames, like most phone videos and downloads, and 10-bit, 4:2:2, 4:4:4 or interlaced H264, which many phones can&#39;t decode</li> <li>A video codec or size different from the call, or above the size and frame rate of your <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/VideoParameters?ref=dev\">VideoParameters</a></li> <li>Recording several participants, or to <code>.mp4</code>, <code>.m4a</code>, <code>.wav</code> or <code>.flac</code></li></ul></blockquote>Re-encoding is automatic, so everything still plays. It only costs more CPU.<hr/><h2>Make a file passthrough-ready</h2>Convert it once, with Opus audio and H264 without B-frames at the size of your <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/VideoParameters?ref=dev\">VideoParameters</a>:<pre><code class=\"language-bash\">ffmpeg -i input.mp4 -c:v libx264 -bf 0 -s 1280x720 -c:a libopus -b:a 128k output.mkv</code></pre><hr/><h2>Fixed or adaptive quality</h2>Audio sent as it is keeps the bitrate of the file and doesn&#39;t follow the connection, while re-encoded audio adapts to it. Pick what suits your server:<ul><li><b>Fixed:</b> on a stable, fast connection, use Opus files encoded at the bitrate you want. They are sent as they are, with constant quality.</li> <li><b>Adaptive:</b> on an unstable connection, let NTgCalls encode the audio. It lowers the bitrate when the bandwidth drops and adds error correction when packets get lost.</li></ul>To always re-encode an Opus source, set a <code>bitrate</code> in <a href=\"https://pytgcalls.github.io/PyTgCalls/Stream%20Descriptors/AudioParameters?ref=dev\">AudioParameters</a> lower than the one of the file. Passthrough also switches to re-encoding on its own when the channels don&#39;t match.<hr/><h2>Check it</h2>Before playing, <a href=\"https://pytgcalls.github.io/NTgCalls/Advanced%20Methods/Get%20Media%20Info?ref=dev\">get_media_info()</a> tells whether a file can be sent as it is:<pre><code>from ntgcalls import NTgCalls, StreamMode\n\ninfo = NTgCalls.get_media_info(&#39;song.webm&#39;, StreamMode.CAPTURE)\nprint(info.audio.passthrough)</code></pre>While playing, enable the <code>ntgcalls</code> logger to see whether each stream is forwarded or re-encoded, and why:<pre><code>import logging\n\nlogging.basicConfig(level=logging.INFO)\nlogging.getLogger(&#39;ntgcalls&#39;).setLevel(logging.INFO)</code></pre><pre><code class=\"language-text\">INFO:ntgcalls:libav_demuxer.cpp:134 Sending the Opus audio without re-encoding it\nINFO:ntgcalls:passthrough_video_encoder.cpp:87 Forwarding the encoded H264 video without re-encoding it\nINFO:ntgcalls:passthrough_video_encoder.cpp:102 Re-encoding the video, the source uses B-frames</code></pre>Lines starting with <b>Sending</b> or <b>Forwarding</b> mean passthrough. <b>Re-encoding</b> lasts for the whole file and says why at the end, while <b>Encoding the video until the next usable source keyframe</b> lasts only a moment, after a bandwidth drop or a keyframe request.",
+      "preview": "When your media already matches the call, NTgCalls sends it as it is, without decoding and encoding it again. You get the original quality and a fraction of the CPU.NOTE Opus audio, from Ogg, WebM, MKA or YouTube H264...",
+      "url": "https://pytgcalls.github.io/PyTgCalls/Passthrough?ref=dev",
+      "content": {
+        "example": {
+          "language": "bash",
+          "code": "ffmpeg -i input.mp4 -c:v libx264 -bf 0 -s 1280x720 -c:a libopus -b:a 128k output.mkv"
+        }
       }
     },
     {
